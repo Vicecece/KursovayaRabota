@@ -1,0 +1,489 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="Хранилище CityLibraryModel" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="sysdiagrams">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="principal_id" Type="int" Nullable="false" />
+          <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="version" Type="int" />
+          <Property Name="definition" Type="varbinary(max)" />
+        </EntityType>
+        <EntityType Name="withTriggers">
+          <Key>
+            <PropertyRef Name="au_id" />
+          </Key>
+          <Property Name="au_id" Type="int" Nullable="false" />
+          <Property Name="au_fname" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="au_lname" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="phone" Type="nvarchar" MaxLength="100" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Библиотеки">
+          <Key>
+            <PropertyRef Name="Библиотека ID" />
+          </Key>
+          <Property Name="Библиотека ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Название" Type="nvarchar" MaxLength="150" Nullable="false" />
+          <Property Name="Адрес" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="Город" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Выдача литературы">
+          <Key>
+            <PropertyRef Name="ID выдачи" />
+          </Key>
+          <Property Name="ID выдачи" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Читатель ID" Type="int" Nullable="false" />
+          <Property Name="Литература ID" Type="int" Nullable="false" />
+          <Property Name="Дата выдачи" Type="date" Nullable="false" />
+          <Property Name="Срок выдачи" Type="nvarchar" MaxLength="25" Nullable="false" />
+          <Property Name="Вид выдачи" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Наличие залога" Type="nchar" MaxLength="10" Nullable="false" />
+          <Property Name="Сумма залога" Type="money" />
+          <Property Name="Дата сдачи" Type="date" />
+          <Property Name="Книга сдана/не сдана" Type="nvarchar" MaxLength="10" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Литература">
+          <Key>
+            <PropertyRef Name="ID литературы" />
+          </Key>
+          <Property Name="ID литературы" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Название" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="Категория литературы" Type="nvarchar" MaxLength="150" Nullable="false" />
+          <Property Name="Авторы" Type="nvarchar" MaxLength="150" Nullable="false" />
+          <Property Name="Издательство" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="Год издательства" Type="int" Nullable="false" />
+          <Property Name="Кол-во страниц" Type="int" Nullable="false" />
+          <Property Name="Читальный зал ID" Type="int" Nullable="false" />
+          <Property Name="Кол-во единиц лит-ры" Type="int" Nullable="false" />
+          <Property Name="Image" Type="nvarchar(max)" />
+        </EntityType>
+        <EntityType Name="Читальные залы">
+          <Key>
+            <PropertyRef Name="ID зала" />
+          </Key>
+          <Property Name="ID зала" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Название зала" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Библиотека ID" Type="int" Nullable="false" />
+          <Property Name="Кол-во посадочных мест" Type="int" Nullable="false" />
+          <Property Name="Время работы" Type="nvarchar" MaxLength="30" Nullable="false" />
+          <Property Name="Этаж" Type="int" Nullable="false" />
+          <Property Name="Кол-во сотрудников" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Читатели">
+          <Key>
+            <PropertyRef Name="ID читателя" />
+          </Key>
+          <Property Name="ID читателя" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Фамилия" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Имя" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Отчество" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Категория читателя" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Место работы или обучения" Type="nvarchar" MaxLength="50" />
+          <Property Name="Дата рождения" Type="date" Nullable="false" />
+          <Property Name="Дата регистрации" Type="date" Nullable="false" />
+          <Property Name="Библиотека ID" Type="int" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_Выдача литературы_Литература">
+          <End Role="Литература" Type="Self.Литература" Multiplicity="1" />
+          <End Role="Выдача литературы" Type="Self.Выдача литературы" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Литература">
+              <PropertyRef Name="ID литературы" />
+            </Principal>
+            <Dependent Role="Выдача литературы">
+              <PropertyRef Name="Литература ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Выдача литературы_Читатели">
+          <End Role="Читатели" Type="Self.Читатели" Multiplicity="1" />
+          <End Role="Выдача литературы" Type="Self.Выдача литературы" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Читатели">
+              <PropertyRef Name="ID читателя" />
+            </Principal>
+            <Dependent Role="Выдача литературы">
+              <PropertyRef Name="Читатель ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Литература_Читальные залы">
+          <End Role="Читальные залы" Type="Self.Читальные залы" Multiplicity="1" />
+          <End Role="Литература" Type="Self.Литература" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Читальные залы">
+              <PropertyRef Name="ID зала" />
+            </Principal>
+            <Dependent Role="Литература">
+              <PropertyRef Name="Читальный зал ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Читальные залы_Библиотеки1">
+          <End Role="Библиотеки" Type="Self.Библиотеки" Multiplicity="1" />
+          <End Role="Читальные залы" Type="Self.Читальные залы" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Библиотеки">
+              <PropertyRef Name="Библиотека ID" />
+            </Principal>
+            <Dependent Role="Читальные залы">
+              <PropertyRef Name="Библиотека ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Читатели_Библиотеки">
+          <End Role="Библиотеки" Type="Self.Библиотеки" Multiplicity="1" />
+          <End Role="Читатели" Type="Self.Читатели" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Библиотеки">
+              <PropertyRef Name="Библиотека ID" />
+            </Principal>
+            <Dependent Role="Читатели">
+              <PropertyRef Name="Библиотека ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="Хранилище CityLibraryModelContainer">
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="withTriggers" EntityType="Self.withTriggers" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Библиотеки" EntityType="Self.Библиотеки" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Выдача литературы" EntityType="Self.Выдача литературы" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Литература" EntityType="Self.Литература" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Читальные залы" EntityType="Self.Читальные залы" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Читатели" EntityType="Self.Читатели" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_Выдача литературы_Литература" Association="Self.FK_Выдача литературы_Литература">
+            <End Role="Литература" EntitySet="Литература" />
+            <End Role="Выдача литературы" EntitySet="Выдача литературы" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Выдача литературы_Читатели" Association="Self.FK_Выдача литературы_Читатели">
+            <End Role="Читатели" EntitySet="Читатели" />
+            <End Role="Выдача литературы" EntitySet="Выдача литературы" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Литература_Читальные залы" Association="Self.FK_Литература_Читальные залы">
+            <End Role="Читальные залы" EntitySet="Читальные залы" />
+            <End Role="Литература" EntitySet="Литература" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Читальные залы_Библиотеки1" Association="Self.FK_Читальные залы_Библиотеки1">
+            <End Role="Библиотеки" EntitySet="Библиотеки" />
+            <End Role="Читальные залы" EntitySet="Читальные залы" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Читатели_Библиотеки" Association="Self.FK_Читатели_Библиотеки">
+            <End Role="Библиотеки" EntitySet="Библиотеки" />
+            <End Role="Читатели" EntitySet="Читатели" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="CityLibraryModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="sysdiagrams">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="principal_id" Type="Int32" Nullable="false" />
+          <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="version" Type="Int32" />
+          <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+        </EntityType>
+        <EntityType Name="withTriggers">
+          <Key>
+            <PropertyRef Name="au_id" />
+          </Key>
+          <Property Name="au_id" Type="Int32" Nullable="false" />
+          <Property Name="au_fname" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="au_lname" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="phone" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Библиотеки">
+          <Key>
+            <PropertyRef Name="Библиотека_ID" />
+          </Key>
+          <Property Name="Библиотека_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Название" Type="String" MaxLength="150" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Адрес" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Город" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Читальные_залы" Relationship="Self.FK_Читальные_залы_Библиотеки1" FromRole="Библиотеки" ToRole="Читальные_залы" />
+          <NavigationProperty Name="Читатели" Relationship="Self.FK_Читатели_Библиотеки" FromRole="Библиотеки" ToRole="Читатели" />
+        </EntityType>
+        <EntityType Name="Выдача_литературы">
+          <Key>
+            <PropertyRef Name="ID_выдачи" />
+          </Key>
+          <Property Name="ID_выдачи" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Читатель_ID" Type="Int32" Nullable="false" />
+          <Property Name="Литература_ID" Type="Int32" Nullable="false" />
+          <Property Name="Дата_выдачи" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="Срок_выдачи" Type="String" MaxLength="25" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Вид_выдачи" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Наличие_залога" Type="String" MaxLength="10" FixedLength="true" Unicode="true" Nullable="false" />
+          <Property Name="Сумма_залога" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="Дата_сдачи" Type="DateTime" Precision="0" />
+          <Property Name="Книга_сдана_не_сдана" Type="String" MaxLength="10" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Литература" Relationship="Self.FK_Выдача_литературы_Литература" FromRole="Выдача_литературы" ToRole="Литература" />
+          <NavigationProperty Name="Читатели" Relationship="Self.FK_Выдача_литературы_Читатели" FromRole="Выдача_литературы" ToRole="Читатели" />
+        </EntityType>
+        <EntityType Name="Литература">
+          <Key>
+            <PropertyRef Name="ID_литературы" />
+          </Key>
+          <Property Name="ID_литературы" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Название" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Категория_литературы" Type="String" MaxLength="150" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Авторы" Type="String" MaxLength="150" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Издательство" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Год_издательства" Type="Int32" Nullable="false" />
+          <Property Name="Кол_во_страниц" Type="Int32" Nullable="false" />
+          <Property Name="Читальный_зал_ID" Type="Int32" Nullable="false" />
+          <Property Name="Кол_во_единиц_лит_ры" Type="Int32" Nullable="false" />
+          <Property Name="Image" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Выдача_литературы" Relationship="Self.FK_Выдача_литературы_Литература" FromRole="Литература" ToRole="Выдача_литературы" />
+          <NavigationProperty Name="Читальные_залы" Relationship="Self.FK_Литература_Читальные_залы" FromRole="Литература" ToRole="Читальные_залы" />
+        </EntityType>
+        <EntityType Name="Читальные_залы">
+          <Key>
+            <PropertyRef Name="ID_зала" />
+          </Key>
+          <Property Name="ID_зала" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Название_зала" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Библиотека_ID" Type="Int32" Nullable="false" />
+          <Property Name="Кол_во_посадочных_мест" Type="Int32" Nullable="false" />
+          <Property Name="Время_работы" Type="String" MaxLength="30" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Этаж" Type="Int32" Nullable="false" />
+          <Property Name="Кол_во_сотрудников" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Библиотеки" Relationship="Self.FK_Читальные_залы_Библиотеки1" FromRole="Читальные_залы" ToRole="Библиотеки" />
+          <NavigationProperty Name="Литература" Relationship="Self.FK_Литература_Читальные_залы" FromRole="Читальные_залы" ToRole="Литература" />
+        </EntityType>
+        <EntityType Name="Читатели">
+          <Key>
+            <PropertyRef Name="ID_читателя" />
+          </Key>
+          <Property Name="ID_читателя" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Фамилия" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Имя" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Отчество" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Категория_читателя" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Место_работы_или_обучения" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Дата_рождения" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="Дата_регистрации" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="Библиотека_ID" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Библиотеки" Relationship="Self.FK_Читатели_Библиотеки" FromRole="Читатели" ToRole="Библиотеки" />
+          <NavigationProperty Name="Выдача_литературы" Relationship="Self.FK_Выдача_литературы_Читатели" FromRole="Читатели" ToRole="Выдача_литературы" />
+        </EntityType>
+        <Association Name="FK_Читальные_залы_Библиотеки1">
+          <End Role="Библиотеки" Type="Self.Библиотеки" Multiplicity="1" />
+          <End Role="Читальные_залы" Type="Self.Читальные_залы" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Библиотеки">
+              <PropertyRef Name="Библиотека_ID" />
+            </Principal>
+            <Dependent Role="Читальные_залы">
+              <PropertyRef Name="Библиотека_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Читатели_Библиотеки">
+          <End Role="Библиотеки" Type="Self.Библиотеки" Multiplicity="1" />
+          <End Role="Читатели" Type="Self.Читатели" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Библиотеки">
+              <PropertyRef Name="Библиотека_ID" />
+            </Principal>
+            <Dependent Role="Читатели">
+              <PropertyRef Name="Библиотека_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Выдача_литературы_Литература">
+          <End Role="Литература" Type="Self.Литература" Multiplicity="1" />
+          <End Role="Выдача_литературы" Type="Self.Выдача_литературы" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Литература">
+              <PropertyRef Name="ID_литературы" />
+            </Principal>
+            <Dependent Role="Выдача_литературы">
+              <PropertyRef Name="Литература_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Выдача_литературы_Читатели">
+          <End Role="Читатели" Type="Self.Читатели" Multiplicity="1" />
+          <End Role="Выдача_литературы" Type="Self.Выдача_литературы" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Читатели">
+              <PropertyRef Name="ID_читателя" />
+            </Principal>
+            <Dependent Role="Выдача_литературы">
+              <PropertyRef Name="Читатель_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Литература_Читальные_залы">
+          <End Role="Читальные_залы" Type="Self.Читальные_залы" Multiplicity="1" />
+          <End Role="Литература" Type="Self.Литература" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Читальные_залы">
+              <PropertyRef Name="ID_зала" />
+            </Principal>
+            <Dependent Role="Литература">
+              <PropertyRef Name="Читальный_зал_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="CityLibraryEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" />
+          <EntitySet Name="withTriggers" EntityType="Self.withTriggers" />
+          <EntitySet Name="Библиотеки" EntityType="Self.Библиотеки" />
+          <EntitySet Name="Выдача_литературы" EntityType="Self.Выдача_литературы" />
+          <EntitySet Name="Литература" EntityType="Self.Литература" />
+          <EntitySet Name="Читальные_залы" EntityType="Self.Читальные_залы" />
+          <EntitySet Name="Читатели" EntityType="Self.Читатели" />
+          <AssociationSet Name="FK_Читальные_залы_Библиотеки1" Association="Self.FK_Читальные_залы_Библиотеки1">
+            <End Role="Библиотеки" EntitySet="Библиотеки" />
+            <End Role="Читальные_залы" EntitySet="Читальные_залы" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Читатели_Библиотеки" Association="Self.FK_Читатели_Библиотеки">
+            <End Role="Библиотеки" EntitySet="Библиотеки" />
+            <End Role="Читатели" EntitySet="Читатели" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Выдача_литературы_Литература" Association="Self.FK_Выдача_литературы_Литература">
+            <End Role="Литература" EntitySet="Литература" />
+            <End Role="Выдача_литературы" EntitySet="Выдача_литературы" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Выдача_литературы_Читатели" Association="Self.FK_Выдача_литературы_Читатели">
+            <End Role="Читатели" EntitySet="Читатели" />
+            <End Role="Выдача_литературы" EntitySet="Выдача_литературы" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Литература_Читальные_залы" Association="Self.FK_Литература_Читальные_залы">
+            <End Role="Читальные_залы" EntitySet="Читальные_залы" />
+            <End Role="Литература" EntitySet="Литература" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="Хранилище CityLibraryModelContainer" CdmEntityContainer="CityLibraryEntities">
+          <EntitySetMapping Name="sysdiagrams">
+            <EntityTypeMapping TypeName="CityLibraryModel.sysdiagrams">
+              <MappingFragment StoreEntitySet="sysdiagrams">
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="principal_id" ColumnName="principal_id" />
+                <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
+                <ScalarProperty Name="version" ColumnName="version" />
+                <ScalarProperty Name="definition" ColumnName="definition" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="withTriggers">
+            <EntityTypeMapping TypeName="CityLibraryModel.withTriggers">
+              <MappingFragment StoreEntitySet="withTriggers">
+                <ScalarProperty Name="au_id" ColumnName="au_id" />
+                <ScalarProperty Name="au_fname" ColumnName="au_fname" />
+                <ScalarProperty Name="au_lname" ColumnName="au_lname" />
+                <ScalarProperty Name="phone" ColumnName="phone" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Библиотеки">
+            <EntityTypeMapping TypeName="CityLibraryModel.Библиотеки">
+              <MappingFragment StoreEntitySet="Библиотеки">
+                <ScalarProperty Name="Библиотека_ID" ColumnName="Библиотека ID" />
+                <ScalarProperty Name="Название" ColumnName="Название" />
+                <ScalarProperty Name="Адрес" ColumnName="Адрес" />
+                <ScalarProperty Name="Город" ColumnName="Город" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Выдача_литературы">
+            <EntityTypeMapping TypeName="CityLibraryModel.Выдача_литературы">
+              <MappingFragment StoreEntitySet="Выдача литературы">
+                <ScalarProperty Name="ID_выдачи" ColumnName="ID выдачи" />
+                <ScalarProperty Name="Читатель_ID" ColumnName="Читатель ID" />
+                <ScalarProperty Name="Литература_ID" ColumnName="Литература ID" />
+                <ScalarProperty Name="Дата_выдачи" ColumnName="Дата выдачи" />
+                <ScalarProperty Name="Срок_выдачи" ColumnName="Срок выдачи" />
+                <ScalarProperty Name="Вид_выдачи" ColumnName="Вид выдачи" />
+                <ScalarProperty Name="Наличие_залога" ColumnName="Наличие залога" />
+                <ScalarProperty Name="Сумма_залога" ColumnName="Сумма залога" />
+                <ScalarProperty Name="Дата_сдачи" ColumnName="Дата сдачи" />
+                <ScalarProperty Name="Книга_сдана_не_сдана" ColumnName="Книга сдана/не сдана" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Литература">
+            <EntityTypeMapping TypeName="CityLibraryModel.Литература">
+              <MappingFragment StoreEntitySet="Литература">
+                <ScalarProperty Name="ID_литературы" ColumnName="ID литературы" />
+                <ScalarProperty Name="Название" ColumnName="Название" />
+                <ScalarProperty Name="Категория_литературы" ColumnName="Категория литературы" />
+                <ScalarProperty Name="Авторы" ColumnName="Авторы" />
+                <ScalarProperty Name="Издательство" ColumnName="Издательство" />
+                <ScalarProperty Name="Год_издательства" ColumnName="Год издательства" />
+                <ScalarProperty Name="Кол_во_страниц" ColumnName="Кол-во страниц" />
+                <ScalarProperty Name="Читальный_зал_ID" ColumnName="Читальный зал ID" />
+                <ScalarProperty Name="Кол_во_единиц_лит_ры" ColumnName="Кол-во единиц лит-ры" />
+                <ScalarProperty Name="Image" ColumnName="Image" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Читальные_залы">
+            <EntityTypeMapping TypeName="CityLibraryModel.Читальные_залы">
+              <MappingFragment StoreEntitySet="Читальные залы">
+                <ScalarProperty Name="ID_зала" ColumnName="ID зала" />
+                <ScalarProperty Name="Название_зала" ColumnName="Название зала" />
+                <ScalarProperty Name="Библиотека_ID" ColumnName="Библиотека ID" />
+                <ScalarProperty Name="Кол_во_посадочных_мест" ColumnName="Кол-во посадочных мест" />
+                <ScalarProperty Name="Время_работы" ColumnName="Время работы" />
+                <ScalarProperty Name="Этаж" ColumnName="Этаж" />
+                <ScalarProperty Name="Кол_во_сотрудников" ColumnName="Кол-во сотрудников" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Читатели">
+            <EntityTypeMapping TypeName="CityLibraryModel.Читатели">
+              <MappingFragment StoreEntitySet="Читатели">
+                <ScalarProperty Name="ID_читателя" ColumnName="ID читателя" />
+                <ScalarProperty Name="Фамилия" ColumnName="Фамилия" />
+                <ScalarProperty Name="Имя" ColumnName="Имя" />
+                <ScalarProperty Name="Отчество" ColumnName="Отчество" />
+                <ScalarProperty Name="Категория_читателя" ColumnName="Категория читателя" />
+                <ScalarProperty Name="Место_работы_или_обучения" ColumnName="Место работы или обучения" />
+                <ScalarProperty Name="Дата_рождения" ColumnName="Дата рождения" />
+                <ScalarProperty Name="Дата_регистрации" ColumnName="Дата регистрации" />
+                <ScalarProperty Name="Библиотека_ID" ColumnName="Библиотека ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="Нет" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

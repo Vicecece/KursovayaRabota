@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="440cb149d90f4ddc8c857d731c15a0c7" Name="Diagram1">
+        <EntityTypeShape EntityType="CityLibraryModel.sysdiagrams" Width="1.5" PointX="5.75" PointY="7.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="CityLibraryModel.withTriggers" Width="1.5" PointX="7.75" PointY="7.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="CityLibraryModel.Библиотеки" Width="1.5" PointX="0.75" PointY="3.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="CityLibraryModel.Выдача_литературы" Width="1.5" PointX="7.5" PointY="3.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="CityLibraryModel.Литература" Width="1.5" PointX="5.25" PointY="1.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="CityLibraryModel.Читальные_залы" Width="1.5" PointX="3" PointY="1.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="CityLibraryModel.Читатели" Width="1.5" PointX="3" PointY="5.25" IsExpanded="true" />
+        <AssociationConnector Association="CityLibraryModel.FK_Читальные_залы_Библиотеки1" ManuallyRouted="false" />
+        <AssociationConnector Association="CityLibraryModel.FK_Читатели_Библиотеки" ManuallyRouted="false" />
+        <AssociationConnector Association="CityLibraryModel.FK_Выдача_литературы_Литература" ManuallyRouted="false" />
+        <AssociationConnector Association="CityLibraryModel.FK_Выдача_литературы_Читатели" ManuallyRouted="false" />
+        <AssociationConnector Association="CityLibraryModel.FK_Литература_Читальные_залы" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

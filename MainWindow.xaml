@@ -1,0 +1,23 @@
+﻿<Window x:Class="KursovayaRabota.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:KursovayaRabota"
+        mc:Ignorable="d"
+        Title="MainWindow" MinHeight="575" MinWidth="1000" Height="450" Width="800" Icon="Res/defoult.png" FontFamily="Krona One" FontSize="17">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="50"></RowDefinition>
+            <RowDefinition></RowDefinition>
+            <RowDefinition Height="40"></RowDefinition>
+        </Grid.RowDefinitions>
+        <TextBlock Background="#C0C0C0"></TextBlock>
+        <TextBlock Grid.Row="2" Background="#C0C0C0"></TextBlock>
+        <TextBlock Text="Книги в библиотеках" FontSize="30" HorizontalAlignment="Center" VerticalAlignment="Center"></TextBlock>
+        <Image Source="Res/defoult.png" HorizontalAlignment="Left" VerticalAlignment="Center"></Image>
+
+        <Frame Name="MainFrame" Grid.Row="1" NavigationUIVisibility="Hidden"></Frame>
+        
+    </Grid>
+</Window>
